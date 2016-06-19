@@ -19,8 +19,8 @@ var bio = {
     ],
     biopic: "http://a3.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTE4MDAzNDEwMjg1MTM1Mzc0.jpg",
     display: function() {
-    	$('#topContacts')
-    		.append(HTMLheaderName.replace("%data%", this.name))
+        $('#topContacts')
+            .append(HTMLheaderName.replace("%data%", this.name))
 
     }
 };
@@ -59,25 +59,42 @@ var work = {
 };
 
 var view = {
-	init: function() {
+    init: function() {
+        this.render();
+    },
+    render: function() {
+        var $top = $('#topContacts');
+        
+        function renderBio() {
+            $top.append(HTMLheaderName.replace('%data%', bio.name))
+        }
+        function renderWork() {
+            
+        }
+        function renderEdu() {
+            
+        }
 
-	}
-	render: function() {
-		function renderWork() {
-			
-		}
-		function renderBio() {
-			
-		}
-		function renderEdu() {
-			
-		}
-	}
+        renderBio(); renderWork(); renderEdu();
+    },
+    fmt: function(html, data) {
+        if (typeof(data) === "string") {
+            return html.replace('%data%', data);
+        } else if (typeof(data) === "object") {
+            var output = html;
+            for (var key in data) {
+                output = output.replace('%'+key+'%', data[key]);
+            }
+            return output;
+        }
+    }
 };
 
 var octopus = {
-	init: function() {
-		view.init();
-		model.init();
-	}
+    init: function() {
+        view.init();
+        model.init();
+    }
 };
+
+octopus.init();
